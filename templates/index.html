@@ -1,0 +1,253 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="refresh" content="5">
+  <title>Food Court Queue Status</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fff5f5;
+      color: #3d0000;
+    }
+
+    .sticky-header {
+      position: sticky;
+      top: 0;
+      background-color: #ffcccc;
+      padding: 10px;
+      z-index: 300;
+      border-bottom: 2px solid #cc0000;
+    }
+
+    .dropdown {
+      margin: 20px;
+    }
+
+    .dropdown-btn {
+      width: 100%;
+      background-color: #cc0000;
+      color: white;
+      padding: 15px;
+      font-size: 18px;
+      border: none;
+      cursor: pointer;
+      border-radius: 8px;
+      position: sticky;
+      top: 60px;
+      z-index: 200;
+    }
+
+    .dropdown-content {
+      padding: 10px;
+    }
+
+    .card {
+      background: white;
+      margin: 10px 0;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .card .stall-name {
+      font-size: 20px;
+      font-weight: bold;
+      color: #b30000;
+      flex: 1 1 100%;
+    }
+
+    .queue-info {
+      text-align: right;
+      flex: 1 1 100%;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .queue-info .people {
+      font-size: 16px;
+    }
+
+    .status-bar {
+      width: 100%;
+      max-width: 100px;
+      height: 10px;
+      border-radius: 5px;
+      margin: 5px 0;
+    }
+
+    .queue-info .phrase {
+      font-weight: bold;
+    }
+
+    .short {
+      background-color: #4CAF50; /* green */
+    }
+
+    .medium {
+      background-color: #FFEB3B; /* yellow */
+    }
+
+    .long {
+      background-color: #F44336; /* red */
+    }
+
+    @media (min-width: 600px) {
+      .card {
+        flex-wrap: nowrap;
+      }
+
+      .card .stall-name {
+        flex: 1;
+      }
+
+      .queue-info {
+        flex: 0 0 200px;
+        margin-top: 0;
+        align-items: flex-end;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sticky-header">
+    <h2>Food Court Queue Tracker</h2>
+  </div>
+
+  <div class="dropdown">
+    <button class="dropdown-btn" onclick="toggleDropdown('court1')">Food Court 1</button>
+    <div id="court1" class="dropdown-content">
+      
+       <!-- <div class="card">
+        <div class="stall-name">Nasi Lemak Delight</div>
+        <div class="queue-info">
+          <div class="people">≤ 10 people</div>
+          <div class="status-bar medium"></div>
+          <div class="phrase">Wait a little</div>
+          <div class="phrase">(est. waiting time: <span style="font-size: 28px; font-weight: bold; ">9</span>min)</div>
+        </div>
+      </div>  -->
+
+
+      <!-- Will only change this food stall for demo -->
+      <div class="card">
+          <div class="stall-name">Nasi Lemak Delight</div>
+          <div class="queue-info">
+              <div class="people">{{ people_text }}</div>
+              <div class="status-bar {{ status_class }}"></div>
+              <div class="phrase">{{ phrase_text }}</div>
+              <div class="phrase">(est. waiting time: <span style="font-size: 28px; font-weight: bold;">{{ waiting_time }}</span>min)</div>
+          </div>
+      </div>
+
+      <div class="card">
+        <div class="stall-name">Western Bites</div>
+        <div class="queue-info">
+          <div class="people">≤ 5 people</div>
+          <div class="status-bar short"></div>
+          <div class="phrase">Good to go!</div>
+          <div class="phrase">(est. waiting time: <span style="font-size: 28px; font-weight: bold; ">3</span> mins)</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="stall-name">Tofu Treats</div>
+        <div class="queue-info">
+          <div class="people">≤15 people</div>
+          <div class="status-bar long"></div>
+          <div class="phrase">Queue too long</div>
+          <div class="phrase">(est. waiting time: <span style="font-size: 28px; font-weight: bold; ">17</span> min)</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="stall-name">Quick Snacks</div>
+        <div class="queue-info">
+          <div class="people">0 people</div>
+          <div class="status-bar short"></div>
+          <div class="phrase">Good to go!</div>
+          <div class="phrase">(est. waiting time: <span style="font-size: 28px; font-weight: bold; ">0</span>min)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dropdown">
+    <button class="dropdown-btn" onclick="toggleDropdown('court2')">Food Court 2</button>
+    <div id="court2" class="dropdown-content">
+      <div class="card">
+        <div class="stall-name">Chicken Rice Express</div>
+        <div class="queue-info">
+          <div class="people">≤15 people</div>
+          <div class="status-bar long"></div>
+          <div class="phrase">Queue too long</div>
+          <div class="phrase">(est. waiting time: <span style="font-size: 28px; font-weight: bold; ">21</span>min)</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="stall-name">Veggie Palace</div>
+        <div class="queue-info">
+          <div class="people">≤15 people</div>
+          <div class="status-bar long"></div>
+          <div class="phrase">Queue too long</div>
+          <div class="phrase">(est. waiting time: <span style="font-size: 28px; font-weight: bold; ">15</span>min)</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="stall-name">Toast & Brew</div>
+        <div class="queue-info">
+          <div class="people">≤5 people</div>
+          <div class="status-bar short"></div>
+          <div class="phrase">Good to go!</div>
+          <div class="phrase">(est. waiting time: <span style="font-size: 28px; font-weight: bold; ">5</span>min)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dropdown">
+    <button class="dropdown-btn" onclick="toggleDropdown('court3')">Food Court 3</button>
+    <div id="court3" class="dropdown-content">
+      <div class="card">
+        <div class="stall-name">Spicy Express</div>
+        <div class="queue-info">
+          <div class="people">≤5 people</div>
+          <div class="status-bar short"></div>
+          <div class="phrase">Good to go!</div>
+          <div class="phrase">(est. waiting time: <span style="font-size: 28px; font-weight: bold; ">1</span>min)</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="stall-name">Sushi World</div>
+        <div class="queue-info">
+          <div class="people">≤10 people</div>
+          <div class="status-bar medium"></div>
+          <div class="phrase">Wait a little</div>
+          <div class="phrase">(est. waiting time: <span style="font-size: 28px; font-weight: bold; ">9</span>min)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleDropdown(id) {
+      const el = document.getElementById(id);
+      el.style.display = el.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+
+</body>
+</html> 
+
