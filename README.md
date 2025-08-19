@@ -1,5 +1,4 @@
 to run the website: python app.py
-
 to play with data and thingspeak: python vnc.py 
 
 
@@ -9,9 +8,7 @@ Use triple dots to commit and push + pull
 
 
 To fix (this fix is for pull):
-
 git remote add origin git@github.com:smartqueue123-png/smart_queue.git
-
 git remote -v           # confirm the URL
 
 ssh -T git@github.com   # should greet you as smartqueue123-png
