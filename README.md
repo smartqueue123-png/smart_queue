@@ -29,3 +29,6 @@ Show your public key:
 type $env:USERPROFILE\.ssh\id_ed25519.pub
 
 sjdksjkswlvej
+
+t
+rssd
