@@ -147,11 +147,17 @@
 from flask import Flask, render_template
 import requests
 
+
 import io
 import base64
 import matplotlib
 matplotlib.use('Agg')  # non-GUI backend for saving plots in scripts/servers
 import matplotlib.pyplot as plt
+import threading
+import vnc
+
+# Start vnc.py in the background
+threading.Thread(target=vnc.run_vnc, daemon=True).start()
 
 app = Flask(__name__)
 
