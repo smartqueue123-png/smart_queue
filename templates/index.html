@@ -374,7 +374,25 @@
     const panel = document.getElementById(panelId);
     const isOpen = panel.classList.toggle('open');
     btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    // persist for this tab; use localStorage if you want it across tabs
+    sessionStorage.setItem(panelId + ':open', isOpen ? '1' : '0');
   }
+
+  // restore open/closed state after a refresh
+  document.addEventListener('DOMContentLoaded', function () {
+    // add any other panel IDs you have to this list:
+    const panels = ['nl-reco-panel'];
+
+    panels.forEach(function (panelId) {
+      const saved = sessionStorage.getItem(panelId + ':open');
+      if (saved === '1') {
+        const panel = document.getElementById(panelId);
+        const btn = document.querySelector('[aria-controls="' + panelId + '"]');
+        if (panel) panel.classList.add('open');
+        if (btn) btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
     </script>
   </body>
 </html>
