@@ -8,6 +8,12 @@ Use triple dots to commit and push + pull
 
 
 
+Thingspeak:
+
+https://thingspeak.mathworks.com/channels/3030027 
+
+
+
 To fix (this fix is for pull):
 git remote add origin git@github.com:smartqueue123-png/smart_queue.git
 
@@ -20,13 +26,11 @@ https://chatgpt.com/share/68a33c78-bc08-8011-9cfa-a0a00daa791b
 
 
 Generate a new SSH key:
+
 ssh-keygen -t ed25519 -C "smartqueue123@gmail.com"
+
+
 
 Show your public key:
 
 type $env:USERPROFILE\.ssh\id_ed25519.pub
-
-sjdksjkswlvej
-
-t
-rssd
