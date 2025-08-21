@@ -146,22 +146,22 @@
 
 from flask import Flask, render_template
 import requests
-
-
 import io
 import base64
 import matplotlib
 matplotlib.use('Agg')  # non-GUI backend for saving plots in scripts/servers
 import matplotlib.pyplot as plt
-import threading
-import vnc
-
-# Start vnc.py in the background
-threading.Thread(target=vnc.run_vnc, daemon=True).start()
 
 app = Flask(__name__)
 
-# --- Mock data (average queue per hour, assuming operating hours are 9-6pm) ---
+
+# ThingSpeak channel info
+THINGSPEAK_CHANNEL_ID = 3030027
+THINGSPEAK_API_KEY = "GPF52ZQ1SQE08TVC"
+THINGSPEAK_URL = f'https://api.thingspeak.com/channels/{THINGSPEAK_CHANNEL_ID}/feeds.json?api_key={THINGSPEAK_API_KEY}&results=1'
+
+
+# --- Mock data for graph (average queue per hour, assuming operating hours are 9-6pm) ---
 stall_history = [
     {"hour": "09-10", "avgQueue": 7},
     {"hour": "10-11", "avgQueue": 12},
@@ -172,16 +172,11 @@ stall_history = [
     {"hour": "15-16", "avgQueue": 5}   # quietest hour
 ]
 
+
 def get_best_hour(data):
     best = min(data, key=lambda d: d["avgQueue"])  # lowest average
     return best["hour"], best["avgQueue"]
 
-
-
-# ThingSpeak channel info
-THINGSPEAK_CHANNEL_ID = 3030027
-THINGSPEAK_API_KEY = "GPF52ZQ1SQE08TVC"
-THINGSPEAK_URL = f'https://api.thingspeak.com/channels/{THINGSPEAK_CHANNEL_ID}/feeds.json?api_key={THINGSPEAK_API_KEY}&results=1'
 
 def get_queue_data():
     """Fetch latest ThingSpeak data"""
@@ -199,6 +194,7 @@ def get_queue_data():
     except Exception as e:
         print("Error fetching ThingSpeak:", e)
         return 0, 0, 0
+
 
 def map_category(category):
     """Map numeric category to class and phrase"""
@@ -239,10 +235,10 @@ def index():
     plt.close(fig)
 
     people, category, wait = get_queue_data()
-    print(people, category, wait)   # <-- check the console
+    print(people, category, wait)   # for debugging
     status_class, phrase_text = map_category(category)
     people_text = f"≤ {people} people"
-    print(status_class, phrase_text, people_text)
+    print(status_class, phrase_text, people_text) # for debugging
 
     return render_template("index.html",
                            graph_url=graph_url,
