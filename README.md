@@ -28,7 +28,7 @@ QN: What happpens if the queue length is more than 15, what willl your app shows
 ANS: the barrier can hold up to 15 people only
 
 
-
+\n
 
 
 
