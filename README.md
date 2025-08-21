@@ -21,6 +21,8 @@ How our project works:
 - To determine the length of the queue, if sensor A detect a person the app will show ≤ 5 people (Good to go!), else if both sensor A and B detected it will show ≤ 10 people (Wait a little), else if all sensors (sensor A, B and C) are detected it will show ≤ 15 people (Queue too long), else ≤ 0 people (Good to go!)
 
 
+
+
 Possible Q&A segment:
 QN: How can our code work to support more than 1 stall, or all stalls 
 
@@ -73,15 +75,6 @@ ANS:
 
 
 
-QN:
-
-ANS: 
-
-
-
-QN:
-
-ANS: 
 
 
 How to run this project:
@@ -105,9 +98,3 @@ How to run this project:
 6. Generate a new SSH key: ssh-keygen -t ed25519 -C "smartqueue123@gmail.com"
 
 7. Show your public key: type $env:USERPROFILE\.ssh\id_ed25519.pub
-
-
-
-
-
-
