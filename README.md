@@ -22,13 +22,67 @@ How our project works:
 
 
 Possible Q&A segment:
+QN: How can our code work to support more than 1 stall, or all stalls 
 
-QN: What happpens if the queue length is more than 15, what willl your app shows
+ANS: 
+
+
+
+QN: What happpens if the queue length is more than 15, what will your app shows
 
 ANS: the barrier can hold up to 15 people only
 
 
-\n
+
+QN: What’s your plan if someone blocks a sensor on purpose?
+
+ANS: To determine the length of the queue, if sensor A detect a person the app will show ≤ 5 people (Good to go!), else if both sensor A and B detected it will show ≤ 10 people (Wait a little), else if all sensors (sensor A, B and C) are detected it will show ≤ 15 people (Queue too long), else ≤ 0 people (Good to go!)
+
+
+
+QN: How did you pick the thresholds for “≤5 / ≤10 / ≤15 people” from sensor states?
+
+ANS: We used the training kit and take not of the reading with and without hand, our thresholds derive from 2 factors:
+- Factor 1: we used the readings with hands
+- Factor 2: we used the readings without hands 
+Then we determine the middle point of the 2 readings and set it as our threshold
+
+
+
+QN: Why ThingSpeak instead of storing directly in your own DB?
+
+ANS: 
+
+
+
+QN: Your app currently uses a page reload—why not fetch JSON and update in place?
+
+ANS: 
+
+
+
+QN:What’s your fallback output if one stall errors but others succeed?
+
+ANS: 
+
+
+
+QN: What’s your plan for per-stall calibration data storage (file, env, DB)?
+
+ANS: 
+
+
+
+QN:
+
+ANS: 
+
+
+
+QN:
+
+ANS: 
+
 
 How to run this project:
 
