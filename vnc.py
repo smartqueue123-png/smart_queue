@@ -84,46 +84,6 @@ def measure_distance(TRIG, ECHO):
     return Distance
 
 
-# Confirm presence function (for multiple stalls)
-# def confirm_presence(stall, sensor_type):
-#     start_time = time.time()
-#     detection_start = None
-#     total_window = 10
-#     required_time = 5
-
-#     while time.time() - start_time < total_window:
-#         detected = False
-
-#         if sensor_type == "Ultrasonic":
-#             distance = measure_distance(
-#                 stall["Ultrasonic"]["TRIG"],
-#                 stall["Ultrasonic"]["ECHO"]
-#             )
-#             if distance <= TRIGGER_DISTANCE:
-#                 detected = True
-
-#         elif sensor_type == "IR":
-#             if GPIO.input(stall["IR"]) == 0:
-#                 detected = True
-
-#         elif sensor_type == "LDR":
-#             ldr_value = readadc(stall["LDR"])
-#             if ldr_value < stall["ldr_threshold"]:
-#                 detected = True
-
-#         if detected:
-#             if detection_start is None:
-#                 detection_start = time.time()
-#             elif time.time() - detection_start >= required_time:
-#                 return True
-#         else:
-#             detection_start = None
-
-#         time.sleep(0.1)
-
-#     return False
-
-
 # Confirm presence: 10s observation, 5s continuous detection
 def confirm_presence(sensor_type):
     start_time = time.time()
@@ -165,6 +125,46 @@ def confirm_presence(sensor_type):
         time.sleep(0.1)
 
     return False
+
+
+# Confirm presence function (for multiple stalls)
+# def confirm_presence(stall, sensor_type):
+#     start_time = time.time()
+#     detection_start = None
+#     total_window = 10
+#     required_time = 5
+
+#     while time.time() - start_time < total_window:
+#         detected = False
+
+#         if sensor_type == "Ultrasonic":
+#             distance = measure_distance(
+#                 stall["Ultrasonic"]["TRIG"],
+#                 stall["Ultrasonic"]["ECHO"]
+#             )
+#             if distance <= TRIGGER_DISTANCE:
+#                 detected = True
+
+#         elif sensor_type == "IR":
+#             if GPIO.input(stall["IR"]) == 0:
+#                 detected = True
+
+#         elif sensor_type == "LDR":
+#             ldr_value = readadc(stall["LDR"])
+#             if ldr_value < stall["ldr_threshold"]:
+#                 detected = True
+
+#         if detected:
+#             if detection_start is None:
+#                 detection_start = time.time()
+#             elif time.time() - detection_start >= required_time:
+#                 return True
+#         else:
+#             detection_start = None
+
+#         time.sleep(0.1)
+
+#     return False
 
 
 try:
