@@ -7,7 +7,7 @@ Pain points:
 - Often arrives at food courts just after they get crowded
 
 - Wishes the app could notify her when her favourite stall is less busy
-
+____________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 
 How our project works:
