@@ -24,16 +24,16 @@ How our project works:
 
 
 Possible Q&A segment:
+==============================
+
 QN: How can our code work to support more than 1 stall, or all stalls 
 
-ANS: [might need add some codes and highlight it as comments and specify which line is referring to]
-
+ANS: refer to the commented codes in app.py, vnc.py and index.html with the comment (for multiple stalls)
 
 
 QN: What happpens if the queue length is more than 15, what will your app shows
 
 ANS: the barrier can hold up to 15 people only
-
 
 
 QN: What’s your plan if someone blocks a sensor on purpose?
@@ -48,14 +48,12 @@ ANS:
 To determine the length of the queue, if sensor A detect a person the app will show ≤ 5 people (Good to go!), else if both sensor A and B detected it will show ≤ 10 people (Wait a little), else if all sensors (sensor A, B and C) are detected it will show ≤ 15 people (Queue too long), else ≤ 0 people (Good to go!)
 
 
-
 QN: How did you pick the thresholds for “≤5 / ≤10 / ≤15 people” from sensor states?
 
 ANS: We used the training kit and take not of the reading with and without hand, our thresholds derive from 2 factors:
 - Factor 1: we used the readings with hands
 - Factor 2: we used the readings without hands 
 Then we determine the middle point of the 2 readings and set it as our threshold
-
 
 
 QN: Why ThingSpeak instead of storing directly in your own DB?
@@ -68,7 +66,6 @@ ANS:
 - Lower maintenance – avoids server, storage, and security management.
 
 
-
 QN: Your app currently uses a page reload—why not fetch JSON and update in place?
 
 ANS: 
@@ -79,12 +76,10 @@ ANS:
 - Good for prototypes / small-scale apps – Faster to build and easier to debug compared to setting up full JSON-based asynchronous updates.
 
 
-
 QN: What’s your fallback output if one stall errors but others succeed?
 
 ANS: 
 We added this error message to inform user: "Sorry recommended time is temporarily unavailable for this store" that the graph is temporarily unavailable 
-
 
 
 QN: How will you save each stall’s sensor settings – in a file, in environment variables, or in a database?
@@ -92,7 +87,6 @@ QN: How will you save each stall’s sensor settings – in a file, in environme
 ANS: 
 - Start simple with a file – Save each stall’s settings (like light threshold or distance limit) in a JSON/CSV file. Easy to test and change while developing.
 - Move to a database later – As the project grows, use a database to store and update calibration for many stalls more easily.
-
 
 
 
