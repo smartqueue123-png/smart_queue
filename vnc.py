@@ -45,6 +45,27 @@ def readadc(adcnum):
     return data
 
 
+# Stall configuration (for multiple stalls)
+# stalls = [
+#     {
+#         "name": "Stall 1",
+#         "Ultrasonic": {"TRIG": 25, "ECHO": 27},
+#         "IR": 17,
+#         "LDR": 0,
+#         "ldr_threshold": 200,
+#         "fields": (1, 2, 3)   # ThingSpeak fields
+#     },
+#     {
+#         "name": "Stall 2",
+#         "Ultrasonic": {"TRIG": 22, "ECHO": 23},  # Example GPIO pins
+#         "IR": 24,
+#         "LDR": 1,
+#         "ldr_threshold": 220,
+#         "fields": (4, 5, 6)   # ThingSpeak fields
+#     }
+# ]
+
+
 # Measure distance using ultrasonic sensor
 def measure_distance(TRIG, ECHO):
     GPIO.output(TRIG, 1)
@@ -61,6 +82,46 @@ def measure_distance(TRIG, ECHO):
     ElapsedTime = StopTime - StartTime
     Distance = (ElapsedTime * 34300) / 2  # cm
     return Distance
+
+
+# Confirm presence function (for multiple stalls)
+# def confirm_presence(stall, sensor_type):
+#     start_time = time.time()
+#     detection_start = None
+#     total_window = 10
+#     required_time = 5
+
+#     while time.time() - start_time < total_window:
+#         detected = False
+
+#         if sensor_type == "Ultrasonic":
+#             distance = measure_distance(
+#                 stall["Ultrasonic"]["TRIG"],
+#                 stall["Ultrasonic"]["ECHO"]
+#             )
+#             if distance <= TRIGGER_DISTANCE:
+#                 detected = True
+
+#         elif sensor_type == "IR":
+#             if GPIO.input(stall["IR"]) == 0:
+#                 detected = True
+
+#         elif sensor_type == "LDR":
+#             ldr_value = readadc(stall["LDR"])
+#             if ldr_value < stall["ldr_threshold"]:
+#                 detected = True
+
+#         if detected:
+#             if detection_start is None:
+#                 detection_start = time.time()
+#             elif time.time() - detection_start >= required_time:
+#                 return True
+#         else:
+#             detection_start = None
+
+#         time.sleep(0.1)
+
+#     return False
 
 
 # Confirm presence: 10s observation, 5s continuous detection
@@ -165,6 +226,60 @@ try:
 
         #break  # for testing, remove for continuous loop
 
+
+# try statement (for multiple stalls) 
+# try:
+#     while True:
+#         for stall in stalls:
+#             triggered = {
+#                 "Ultrasonic": confirm_presence(stall, "Ultrasonic"),
+#                 "IR": confirm_presence(stall, "IR"),
+#                 "LDR": confirm_presence(stall, "LDR")
+#             }
+
+#             print(f"\n--- {stall['name']} Sensor Status ---")
+#             for label, is_triggered in triggered.items():
+#                 status = "TRIGGERED" if is_triggered else "clear"
+#                 print(f"{label} Sensor: {status}")
+
+#             u, ir, ldr = triggered["Ultrasonic"], triggered["IR"], triggered["LDR"]
+
+#             if (u and not ir and not ldr) or (u and not ir and ldr):
+#                 est_queue_length = 5
+#             elif u and ir and not ldr:
+#                 est_queue_length = 10
+#             elif u and ir and ldr:
+#                 est_queue_length = 15
+#             else:
+#                 est_queue_length = 0
+
+#             waiting_time = math.ceil(est_queue_length * serving_time)
+
+#             if waiting_time == 0:
+#                 category = 0
+#             elif waiting_time <= 5:
+#                 category = 1
+#             elif waiting_time <= 10:
+#                 category = 2
+#             else:
+#                 category = 3
+
+#             print(f"\n{stall['name']} Queue Summary:")
+#             print(f"Estimated People in Queue: {est_queue_length}")
+#             print(f"Estimated Waiting Time: {waiting_time}")
+#             print(f"Queue Category: {category}")
+
+#             # Send to ThingSpeak
+#             try:
+#                 f1, f2, f3 = stall["fields"]
+#                 url = (f"https://api.thingspeak.com/update?api_key={THINGSPEAK_API_KEY}"
+#                        f"&field{f1}={est_queue_length}&field{f2}={waiting_time}&field{f3}={category}")
+#                 response = requests.get(url, timeout=5)
+#                 print(f"ThingSpeak response: {response.text}")
+#             except requests.exceptions.RequestException as e:
+#                 print("Failed to send to ThingSpeak:", e)
+
+
 except KeyboardInterrupt:
     print("\nStopping...")
     GPIO.cleanup()
@@ -173,8 +288,9 @@ except KeyboardInterrupt:
 
 
 
-# Using sample data (fake sensor readings)
-# ===============================================
+
+# # Using sample data (fake sensor readings)
+# # ===============================================
 
 # import time
 # import math

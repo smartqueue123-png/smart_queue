@@ -16,6 +16,13 @@ THINGSPEAK_API_KEY = "GPF52ZQ1SQE08TVC"
 THINGSPEAK_URL = f'https://api.thingspeak.com/channels/{THINGSPEAK_CHANNEL_ID}/feeds.json?api_key={THINGSPEAK_API_KEY}&results=1'
 
 
+# # Stall configuration - match vnc.py fields (for multiple stalls)
+# stalls = [
+#     {"name": "Stall 1", "fields": (1, 2, 3)},
+#     {"name": "Stall 2", "fields": (4, 5, 6)}
+# ]
+
+
 # --- Mock data for graph (average queue per hour, assuming operating hours are 9-6pm) ---
 stall_history = [
     {"hour": "09-10", "avgQueue": 7},
@@ -103,6 +110,51 @@ def index():
                            status_class=status_class,
                            phrase_text=phrase_text,
                            waiting_time=wait)
+
+
+# for multiple stalls
+# @app.route('/')
+# def index():
+#     # Prepare graph
+#     hours = [d["hour"] for d in stall_history]
+#     averages = [d["avgQueue"] for d in stall_history]
+
+#     fig, ax = plt.subplots()
+#     bars = ax.bar(hours, averages)
+
+#     best_hour, best_avg = get_best_hour(stall_history)
+#     best_index = hours.index(best_hour)
+#     bars[best_index].set_color("green")
+
+#     ax.set_title("Last Week's Queue Data (Average Queue per Hour)")
+#     ax.set_xlabel("Hour")
+#     ax.set_ylabel("Average Queue Length")
+
+#     buf = io.BytesIO()
+#     plt.savefig(buf, format="png")
+#     buf.seek(0)
+#     graph_url = base64.b64encode(buf.getvalue()).decode("utf-8")
+#     plt.close(fig)
+
+#     # Collect stall statuses
+#     stall_statuses = []
+#     for stall in stalls:
+#         people, category, wait = get_queue_data(stall["fields"])
+#         status_class, phrase_text = map_category(category)
+#         people_text = f"≤ {people} people"
+#         stall_statuses.append({
+#             "name": stall["name"],
+#             "people_text": people_text,
+#             "status_class": status_class,
+#             "phrase_text": phrase_text,
+#             "waiting_time": wait
+#         })
+
+#     return render_template("index.html",
+#                            graph_url=graph_url,
+#                            best_hour=best_hour,
+#                            best_avg=best_avg,
+#                            stalls=stall_statuses)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

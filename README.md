@@ -61,28 +61,38 @@ Then we determine the middle point of the 2 readings and set it as our threshold
 QN: Why ThingSpeak instead of storing directly in your own DB?
 
 ANS: 
-- Zero DevOps: No servers, schemas, or backups to set up—just publish fields and you’re live.
-- Built-in time-series & charts: Quick visualizations and an easy REST API you already use in app.py.
-- Simple quotas fit your loop: Your publisher sleeps ~15s and maps field1/2/3, which aligns with ThingSpeak’s rate limits.
-- Decoupling: Sensors push to a managed endpoint; your Flask app only reads—easier to debug and demo.
+- Quick setup – no need to design and maintain your own database or backend.
+- Built-in visualization – automatic graphs and dashboards without extra coding.
+- Cloud-hosted – data accessible anywhere, anytime.
+- IoT-friendly features – supports real-time data streaming and analytics.
+- Lower maintenance – avoids server, storage, and security management.
 
 
 
 QN: Your app currently uses a page reload—why not fetch JSON and update in place?
 
 ANS: 
+- Simplicity – A full page reload is easier to implement in Python (e.g., Flask/Django) without needing additional JavaScript for dynamic updates.
+- Lower development overhead – No need to write separate APIs and AJAX/Fetch logic, reducing complexity.
+- Consistency – Ensures the entire page (UI + data) is refreshed, avoiding partial update bugs.
+- Reliability – A reload guarantees all resources (data, styles, scripts) are reloaded in sync, reducing chance of stale data (outdated/obsolete data).
+- Good for prototypes / small-scale apps – Faster to build and easier to debug compared to setting up full JSON-based asynchronous updates.
 
 
 
 QN: What’s your fallback output if one stall errors but others succeed?
 
 ANS: 
+We added this error message to inform user: "Sorry recommended time is temporarily unavailable for this store" that the graph is temporarily unavailable 
 
 
 
-QN: What’s your plan for per-stall calibration data storage (file, env, DB)?
+QN: How will you save each stall’s sensor settings – in a file, in environment variables, or in a database?
 
 ANS: 
+- Start simple with a file – Save each stall’s settings (like light threshold or distance limit) in a JSON/CSV file. Easy to test and change while developing.
+- Move to a database later – As the project grows, use a database to store and update calibration for many stalls more easily.
+
 
 
 

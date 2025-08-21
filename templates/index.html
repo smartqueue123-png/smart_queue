@@ -157,54 +157,9 @@
         Food Court 1
       </button>
       <div id="court1" class="dropdown-content">
-        <!-- <div class="card">
-        <div class="stall-name">Nasi Lemak Delight</div>
-        <div class="queue-info">
-          <div class="people">≤ 10 people</div>
-          <div class="status-bar medium"></div>
-          <div class="phrase">Wait a little</div>
-          <div class="phrase">(est. waiting time: <span style="font-size: 28px; font-weight: bold; ">9</span>min)</div>
-        </div>
-      </div>  -->
-
-        <!-- Will only change this food stall for demo -->
-        <!-- <div class="card">
-          <div class="stall-name">Nasi Lemak Delight</div>
-          <div class="queue-info">
-              <div class="people">{{ people_text }}</div>
-              <div class="status-bar {{ status_class }}"></div>
-              <div class="phrase">{{ phrase_text }}</div>
-              <div class="phrase">(est. waiting time: <span style="font-size: 28px; font-weight: bold;">{{ waiting_time }}</span>min)</div>
-          </div>
-      </div> -->
 
         <div class="card">
           <div class="stall-name">Nasi Lemak Delight</div>
-          <!-- <div class="queue-info" style="margin-bottom: 30px">
-            <div class="people">{{ people_text }}</div>
-            <div class="status-bar {{ status_class }}"></div>
-            <div class="phrase">{{ phrase_text }}</div>
-            <div class="phrase">
-              (est. waiting time:
-              <span style="font-size: 28px; font-weight: bold"
-                >{{ waiting_time }}</span
-              >
-              min)
-            </div>
-          </div> -->
-
-          <!-- Graph goes here -->
-          <!-- <div class="history-graph"> -->
-          <!-- <h4>Last Week's Queue Pattern</h4> -->
-          <!-- <img
-              src="data:image/png;base64,{{ graph_url }}"
-              alt="Queue History Graph"
-              style="width: 100%; max-width: 400px"
-            />
-            <p><strong>Recommended Best Hour:</strong> {{ best_hour }}</p>
-          </div> -->
-
-
             <div class="queue-info" style="margin-bottom: 12px">
               <div class="people">{{ people_text }}</div>
               <div class="status-bar {{ status_class }}"></div>
@@ -243,6 +198,18 @@
             </div>
           </div>
         </div>
+
+        <!-- for multiple stalls -->
+        <!-- <div class="stalls">
+          {% for stall in stalls %}
+            <div class="stall-card {{ stall.status_class }}">
+              <h3>{{ stall.name }}</h3>
+              <p>{{ stall.people_text }}</p>
+              <p>{{ stall.phrase_text }}</p>
+              <p>Estimated wait: {{ stall.waiting_time }} min</p>
+            </div>
+          {% endfor %}
+        </div> -->
 
         <div class="card">
           <div class="stall-name">Western Bites</div>
