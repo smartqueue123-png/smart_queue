@@ -30,7 +30,7 @@ ANS: the barrier can hold up to 15 people only
 
 \n
 
-
+How to run this project:
 
 1. To run the website: python app.py
 
