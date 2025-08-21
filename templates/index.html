@@ -254,6 +254,20 @@
               (est. waiting time:
               <span style="font-size: 28px; font-weight: bold">3</span> mins)
             </div>
+
+            <!-- New toggle button -->
+              <button
+                class="reco-btn"
+                aria-expanded="false"
+                aria-controls="nl-reco-panel"
+                onclick="showUnavailableMsg()"
+              >
+                Recommended time
+              </button>
+
+              <p id="msg" style="display:none; color:#cc0000; margin-top:8px;">
+                We’re upgrading the recommended time experience. Please check back soon.
+              </p>
           </div>
         </div>
 
@@ -392,6 +406,20 @@
         if (btn) btn.setAttribute('aria-expanded', 'true');
       }
     });
+  });
+
+  function showUnavailableMsg() {
+    const msg = document.getElementById("msg");
+    msg.style.display = "block";
+    // remember the state
+    sessionStorage.setItem("storeMsgVisible", "1");
+  }
+
+  // restore on reload
+  document.addEventListener("DOMContentLoaded", function () {
+    if (sessionStorage.getItem("storeMsgVisible") === "1") {
+      document.getElementById("msg").style.display = "block";
+    }
   });
     </script>
   </body>
