@@ -12,6 +12,8 @@ Pain points:
 
 How our project works:
 
+- NOTE: This project is only done for 1 stall ONLY 
+
 - Assuming each store has barriers and each of those barriers have 3 sensors installed (IR, Ultrasonic and LDR sensors). 
 
 - The sensor works by detecting if there is someone standing at there (Sensor A [ultrasonic], B [IR] and C [LDR]) sensor A is nearest to the stall while sensor C is furthest from the stall. To confirm the presence is in the queue and not just someone passing by the sensors will detect presence and wait 5 seconds, if presence is still detected, sensors will confirm the presence is part of the queue
@@ -24,6 +26,10 @@ Possible Q&A segment:
 QN: What happpens if the queue length is more than 15, what willl your app shows
 
 ANS: the barrier can hold up to 15 people only
+
+
+
+
 
 
 1. To run the website: python app.py
