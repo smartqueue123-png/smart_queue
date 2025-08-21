@@ -27,14 +27,17 @@ Possible Q&A segment:
 ==============================
 
 QN: How can our code work to support more than 1 stall, or all stalls 
+
 ANS: refer to the commented codes in app.py, vnc.py and index.html with the comment (for multiple stalls)
 
 
 QN: What happpens if the queue length is more than 15, what will your app shows
+
 ANS: the barrier can hold up to 15 people only
 
 
 QN: What’s your plan if someone blocks a sensor on purpose?
+
 ANS: 
 - Senario 1: If the queue length is up to sensor A only and someone block sensor B for less than 5 seconds, our code will be able to detect that is a fault and therefore it will appear as ≤ 5 people (Good to go!)
 - Senario 2: If there is no queue and someone block sensor B for less than 5 seconds, our code will be able to detect that is a fault and therefore it will appear as ≤ 0 people (Good to go!)
@@ -46,6 +49,7 @@ To determine the length of the queue, if sensor A detect a person the app will s
 
 
 QN: How did you pick the thresholds for “≤5 / ≤10 / ≤15 people” from sensor states?
+
 ANS: We used the training kit and take not of the reading with and without hand, our thresholds derive from 2 factors:
 - Factor 1: we used the readings with hands
 - Factor 2: we used the readings without hands 
@@ -53,6 +57,7 @@ Then we determine the middle point of the 2 readings and set it as our threshold
 
 
 QN: Why ThingSpeak instead of storing directly in your own DB?
+
 ANS: 
 - Quick setup – no need to design and maintain your own database or backend.
 - Built-in visualization – automatic graphs and dashboards without extra coding.
@@ -62,6 +67,7 @@ ANS:
 
 
 QN: Your app currently uses a page reload—why not fetch JSON and update in place?
+
 ANS: 
 - Simplicity – A full page reload is easier to implement in Python (e.g., Flask/Django) without needing additional JavaScript for dynamic updates.
 - Lower development overhead – No need to write separate APIs and AJAX/Fetch logic, reducing complexity.
@@ -71,11 +77,13 @@ ANS:
 
 
 QN: What’s your fallback output if one stall errors but others succeed?
+
 ANS: 
 We added this error message to inform user: "Sorry recommended time is temporarily unavailable for this store" that the graph is temporarily unavailable 
 
 
 QN: How will you save each stall’s sensor settings – in a file, in environment variables, or in a database?
+
 ANS: 
 - Start simple with a file – Save each stall’s settings (like light threshold or distance limit) in a JSON/CSV file. Easy to test and change while developing.
 - Move to a database later – As the project grows, use a database to store and update calibration for many stalls more easily.
