@@ -26,7 +26,7 @@ How our project works:
 Possible Q&A segment:
 QN: How can our code work to support more than 1 stall, or all stalls 
 
-ANS: 
+ANS: [might need add some codes and highlight it as comments and specify which line is referring to]
 
 
 
@@ -38,7 +38,14 @@ ANS: the barrier can hold up to 15 people only
 
 QN: What’s your plan if someone blocks a sensor on purpose?
 
-ANS: To determine the length of the queue, if sensor A detect a person the app will show ≤ 5 people (Good to go!), else if both sensor A and B detected it will show ≤ 10 people (Wait a little), else if all sensors (sensor A, B and C) are detected it will show ≤ 15 people (Queue too long), else ≤ 0 people (Good to go!)
+ANS: 
+- Senario 1: If the queue length is up to sensor A only and someone block sensor B for less than 5 seconds, our code will be able to detect that is a fault and therefore it will appear as ≤ 5 people (Good to go!)
+- Senario 2: If there is no queue and someone block sensor B for more than (2 or 5 seconds), our code will be able to detect that is a fault and therefore it will appear as ≤ 0 people (Good to go!)
+- Senario 3: If there is no queue and someone block sensor C for more than (2 or 5 seconds), our code will be able to detect that is a fault and therefore it will appear as ≤ 0 people (Good to go!)
+- Senario 4: If there is no queue and someone block both sensor B and C for more than (2 or 5 seconds), our code will be able to detect that is a fault and therefore it will appear as ≤ 0 people (Good to go!)
+- Senario 5: Else these applies to all other unexpected senarios
+
+To determine the length of the queue, if sensor A detect a person the app will show ≤ 5 people (Good to go!), else if both sensor A and B detected it will show ≤ 10 people (Wait a little), else if all sensors (sensor A, B and C) are detected it will show ≤ 15 people (Queue too long), else ≤ 0 people (Good to go!)
 
 
 
@@ -54,6 +61,10 @@ Then we determine the middle point of the 2 readings and set it as our threshold
 QN: Why ThingSpeak instead of storing directly in your own DB?
 
 ANS: 
+- Zero DevOps: No servers, schemas, or backups to set up—just publish fields and you’re live.
+- Built-in time-series & charts: Quick visualizations and an easy REST API you already use in app.py.
+- Simple quotas fit your loop: Your publisher sleeps ~15s and maps field1/2/3, which aligns with ThingSpeak’s rate limits.
+- Decoupling: Sensors push to a managed endpoint; your Flask app only reads—easier to debug and demo.
 
 
 
@@ -63,7 +74,7 @@ ANS:
 
 
 
-QN:What’s your fallback output if one stall errors but others succeed?
+QN: What’s your fallback output if one stall errors but others succeed?
 
 ANS: 
 
