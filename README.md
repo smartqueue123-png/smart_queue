@@ -2,11 +2,10 @@ Pain points:
 
 - Finds the current crowd % vague (doesn’t show stall-specific data)
 
-- Gets annoyed when she has to manually check multiple stalls
+- Gets annoyed when she has to physically check multiple stalls when she can do it online
 
 - Often arrives at food courts just after they get crowded
 
-- Wishes the app could notify her when her favourite stall is less busy
 ____________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 
