@@ -57,6 +57,19 @@ def get_queue_data():
         print("Error fetching ThingSpeak:", e)
         return 0, 0, 0
 
+# for multiple stalls
+# def get_queue_data(fields):
+#     try:
+#         r = requests.get(THINGSPEAK_URL)
+#         r.raise_for_status()
+#         feeds = r.json().get('feeds', [])
+#         if not feeds:
+#             return 0, 0, 0
+#         latest = feeds[-1]
+#         estimated_people = int(latest.get(f'field{fields[0]}', 0))
+#         waiting_time = int(latest.get(f'field{fields[1]}', 0))
+#         category = int(latest.get(f'field{fields[2]}', 0))
+#         return estimated_people, category, waiting_time
 
 def map_category(category):
     """Map numeric category to class and phrase"""
@@ -115,27 +128,6 @@ def index():
 # for multiple stalls
 # @app.route('/')
 # def index():
-#     # Prepare graph
-#     hours = [d["hour"] for d in stall_history]
-#     averages = [d["avgQueue"] for d in stall_history]
-
-#     fig, ax = plt.subplots()
-#     bars = ax.bar(hours, averages)
-
-#     best_hour, best_avg = get_best_hour(stall_history)
-#     best_index = hours.index(best_hour)
-#     bars[best_index].set_color("green")
-
-#     ax.set_title("Last Week's Queue Data (Average Queue per Hour)")
-#     ax.set_xlabel("Hour")
-#     ax.set_ylabel("Average Queue Length")
-
-#     buf = io.BytesIO()
-#     plt.savefig(buf, format="png")
-#     buf.seek(0)
-#     graph_url = base64.b64encode(buf.getvalue()).decode("utf-8")
-#     plt.close(fig)
-
 #     # Collect stall statuses
 #     stall_statuses = []
 #     for stall in stalls:

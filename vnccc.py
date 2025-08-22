@@ -70,17 +70,27 @@ def measure_distance(TRIG, ECHO, timeout=0.03):
     return round((elapsed * 34300.0) / 2.0, 2)
 
 
+<<<<<<< HEAD
 def confirm_presence(sensor_type):
     """Confirm presence: observe for 10s and require 5s continuous detection, with noise tolerance."""
+=======
+# Confirm presence: 10s observation, 5s continuous detection
+def confirm_presence(sensor_type):
+>>>>>>> 8044efb98b705c08fe6e3e9961ce06626cacc640
     start_time = time.time()
     detection_start = None
     total_window = 10
     required_time = 5
+<<<<<<< HEAD
     last_value = None
     bad_count = 0
     tolerance = 3  # allow up to 3 noisy readings before reset
 
     while time.time() - start_time < total_window:
+=======
+
+    while time.time() - start_time < total_window:  # runs for 10 seconds
+>>>>>>> 8044efb98b705c08fe6e3e9961ce06626cacc640
         detected = False
 
         if sensor_type == "Ultrasonic":
@@ -88,6 +98,7 @@ def confirm_presence(sensor_type):
                 sensors["Ultrasonic"]["TRIG"],
                 sensors["Ultrasonic"]["ECHO"]
             )
+<<<<<<< HEAD
             last_value = distance
             if distance is not None and distance <= TRIGGER_DISTANCE:
                 detected = True
@@ -127,6 +138,76 @@ def confirm_presence(sensor_type):
 # ===========================
 # Main Loop
 # ===========================
+=======
+            if distance <= TRIGGER_DISTANCE: # TRIGGER_DISTANCE = 30
+                detected = True
+
+        elif sensor_type == "IR":
+            # IR detects when GPIO LOW (object detected)
+            if GPIO.input(sensors["IR"]) == 0:
+                detected = True
+
+        elif sensor_type == "LDR":
+            # LDR: read from MCP3008 channel 0, threshold to detect presence
+            ldr_value = readadc(sensors["LDR"])
+            threshold = 200  # make sure threshold is between with and without hand readings (note: the darker the env, the lower the reading)
+            if ldr_value < threshold:
+                detected = True
+
+        if detected:
+            if detection_start is None:
+                detection_start = time.time()   # start counting continuous detection (5sec)
+            elif time.time() - detection_start >= required_time:
+                return True  # confirmed presence
+        else:
+            detection_start = None # reset if detection breaks
+
+        time.sleep(0.1)
+
+    return False
+
+
+# Confirm presence function (for multiple stalls)
+# def confirm_presence(stall, sensor_type):
+#     start_time = time.time()
+#     detection_start = None
+#     total_window = 10
+#     required_time = 5
+
+#     while time.time() - start_time < total_window:
+#         detected = False
+
+#         if sensor_type == "Ultrasonic":
+#             distance = measure_distance(
+#                 stall["Ultrasonic"]["TRIG"],
+#                 stall["Ultrasonic"]["ECHO"]
+#             )
+#             if distance <= TRIGGER_DISTANCE:
+#                 detected = True
+
+#         elif sensor_type == "IR":
+#             if GPIO.input(stall["IR"]) == 0:
+#                 detected = True
+
+#         elif sensor_type == "LDR":
+#             ldr_value = readadc(stall["LDR"])
+#             if ldr_value < stall["ldr_threshold"]:
+#                 detected = True
+
+#         if detected:
+#             if detection_start is None:
+#                 detection_start = time.time()
+#             elif time.time() - detection_start >= required_time:
+#                 return True
+#         else:
+#             detection_start = None
+
+#         time.sleep(0.1)
+
+#     return False
+
+
+>>>>>>> 8044efb98b705c08fe6e3e9961ce06626cacc640
 try:
     while True:     
         # Check all sensors and collect raw values
