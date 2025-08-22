@@ -20,7 +20,7 @@ sensors = {
     "LDR": 0                                 # LDR on MCP3008 channel 0
 }
 
-TRIGGER_DISTANCE = 10  # cm for ultrasonic
+TRIGGER_DISTANCE = 30  # cm for ultrasonic
 CONFIRMATION_TIME = 5  # seconds to confirm presence
 
 
@@ -99,7 +99,7 @@ def confirm_presence(sensor_type):
                 sensors["Ultrasonic"]["TRIG"],
                 sensors["Ultrasonic"]["ECHO"]
             )
-            if distance <= TRIGGER_DISTANCE: # TRIGGER_DISTANCE = 10
+            if distance <= TRIGGER_DISTANCE: # TRIGGER_DISTANCE = 30
                 detected = True
 
         elif sensor_type == "IR":
